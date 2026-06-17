@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// "id": 1,
+// "title": "The program is crashing",
+// "content": "The program is crashing when I try to open it. I've tried restarting the program and my computer, but it's still crashing.",
+// "priority": "High",
+// "status": "Open"
+
+model Ticket {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title    String
+  content  String
+  priority Priority     @default(MEDIUM)
+  status   TicketStatus @default(OPEN)
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
